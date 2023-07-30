@@ -5,9 +5,9 @@ DocLib [doclib]
 
 Browse on: [GitHub](https://github.com/joe7575/doclib)
 
-Download: [GitHub](https://github.com/joe7575/doclib/archive/master.zip)
+Download: [GitHub](https://github.com/joe7575/doclib/archive/main.zip)
 
-![DocLib](https://github.com/joe7575/doclib/blob/master/screenshot.png)
+![DocLib](https://github.com/joe7575/doclib/blob/main/screenshot.png)
 
 
 ### Introduction
