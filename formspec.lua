@@ -80,22 +80,29 @@ end
 local function formspec_help(meta, manual)
 	local idx = meta:get_int("doclib_index")
 	local box = "box[9.5,0.9;1,1.1;#BBBBBB]"
-	local bttn
+	local bttn, symbol
 
 	if manual.content.aPlans[idx] ~= "" then
-		bttn = "button[9.6,1;1,1;plan;"..S("Plan").."]"
+		bttn = "button[9.6,1;1,1;plan;" .. S("Plan") .. "]"
 	elseif manual.content.aImages[idx] ~= "" then
 		local item = manual.content.aImages[idx] or ""
 		if string.find(item, ":") then
-			bttn = box.."item_image[9.6,1;1,1;"..item.."]"
+			bttn = box .. "item_image[9.6,1;1,1;" .. item .. "]"
 		else
-			bttn = "image[9.3,1;2,2;"..item.."]"
+			bttn = "image[9.3,1;2,2;" .. item .. "]"
 		end
 	else
 		bttn = box
 	end
+	
+	if string.find(manual.settings.symbol_item, ":") then
+		symbol = "item_image[9.6,0;1,1;" .. manual.settings.symbol_item .. "]"
+	else
+		symbol = "image[9.6,0;1,1;" .. manual.settings.symbol_item .. "]"
+	end
+	
 	return "size[11,10]" ..
-		"item_image[9.6,0;1,1;doclib:construction_board]" ..
+		symbol ..
 		"tablecolumns[tree,width=1;text,width=10,align=inline]" ..
 		"tableoptions[opendepth=1]" ..
 		"table[0.1,0;9,5;page;" .. table.concat(manual.content.aTitles, ",") .. ";" .. idx .. "]" ..

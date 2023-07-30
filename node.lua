@@ -19,7 +19,9 @@ local S2P = minetest.string_to_pos
 local M = minetest.get_meta
 local MP = minetest.get_modpath("doclib")
 
-local settings = {}
+local settings = {
+	symbol_item = "doclib:manual",
+}
 doclib.create_manual("doclib", "EN", settings)
 local content = dofile(MP.."/manual_EN.lua") 
 doclib.add_to_manual("doclib", "EN", content)

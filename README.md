@@ -1,5 +1,5 @@
-DocLib[doclib]
-==============
+DocLib [doclib]
+===============
 
 **A library to generate ingame manuals based on markdown files.**
 
