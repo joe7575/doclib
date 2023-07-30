@@ -1,27 +1,62 @@
-# Demo Title
+# Heading 1
 
 This is some demo text to demonstrate the generation of ingame manuals from
 markdown files.
+To open sub-chapters, click on the plus sign.
 
-An advantage of this solution is the dual use of the documentation:
+[doclib_demo_img1.png|image]
 
-- The markdown file as web solution e. g. on GitHub
-- The lua code for the ingame manual
+## Heading 2
 
-## Firt Steps
+This is a second-level heading.
 
-After you have placed the Signs Bot Box, you can start the bot by means of the
-'On' button in the box menu. If the bot returns to its box right away,
-you will need to charge it with electrical energy (techage) first.
-The bot then runs straight up until it reaches an obstacle
-(a step with two or more blocks up or down or a sign.)
+[doclib_demo_img2.png|image]
+
+### Heading 3
+
+This is a third-level heading.
+
+[doclib_demo_img3.png|image]
+
+## Text Block
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua.
+
+[doclib:manual|image]
+
+## Lists
+
+This is a list:
+
+- List
+- List
+- List
+
+[default:dirt|image]
+
+## Code
+
+This is a code block:
 
 ```
-jump <label>    -- jump command, <label> is a word from the characters a-z or A-Z
-<label>:        -- jump label / start of a function
-return          -- return from a function
-repeat <num>    -- start of a loop block, <num> is a number 1..999
-end             -- end of a loop block
-call <label>    -- call of a function (with return via the command 'return')
+doclib.create_manual("doclib", "EN", settings)
+local content = dofile(MP.."/manual_EN.lua") 
+doclib.add_to_manual("doclib", "EN", content)
 ```
+
+[doclib_demo_img4.png|image]
+
+
+## Construction plan
+
+This is an example, how to make plans/block diagrams.
+Click an the button on the right.
+
+[demo1|plan]
 

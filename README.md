@@ -36,6 +36,13 @@ To generate a manual for your mod:
 - List
 - Code block
 
+In addition DocLib supports image links for the ingame manual:
+
+- for node images: `[doclib:manual|image]`
+- for PNG images: `[doclib_book_inv.png|image]`
+
+See examples in `manual_EN.md`.
+
 
 ### License
 

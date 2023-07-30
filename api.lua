@@ -20,7 +20,9 @@ function doclib.create_manual(mod, language, settings)
 			aTitles = {},
 			aTexts = {},
 			aImages = {},
-			aPlans = {}
+			aPlans = {},
+			kvImages = {},
+			kvPlans =  {},
 		}
 	}
 end
@@ -42,20 +44,14 @@ function doclib.add_to_manual(mod, language, content)
 	end
 end
 
--- Replace images tags from the markdown file with real PNG file names or node names
-function doclib.add_manual_images(mod, language, table_with_images)
+-- Replace image tag from the markdown file with real PNG file name or node name
+function doclib.add_manual_image(mod, language, name, image)
 	local manual = doclib.manual.mod.language
-	
-	for k, v in pairs(table_with_images) do
-		manual.kvImages[k] = v
-	end
+	manual.content.kvImages[name] = image
 end
 
--- Replace plan tags from the markdown file with real Lua plan tables
-function doclib.add_manual_plans(mod, language, table_with_plans)
+-- Replace plan tag from the markdown file with real Lua plan table
+function doclib.add_manual_plan(mod, language, name, plan)
 	local manual = doclib.manual.mod.language
-	
-	for k, v in pairs(table_with_plans) do
-		manual.kvPlans[k] = v
-	end
+	manual.content.kvPlans[name] = plan
 end

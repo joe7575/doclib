@@ -18,25 +18,52 @@ local P2S = function(pos) if pos then return minetest.pos_to_string(pos) end end
 local S2P = minetest.string_to_pos
 local M = minetest.get_meta
 
-local function tooltip(item)
-	if type(item) == "table" then
-		local img, name = item[1], item[2]
-		if img == "" then  -- larger image for the plan?
-			return "", name
-		elseif img == "10x10" then  -- huge image for the plan?
-			return "10x10", name
-		elseif img == "5x4" then  -- huge image for the plan?
-			return "5x4", name
-		end
-		local ndef = minetest.registered_nodes[name]
-		if ndef and ndef.description then
-			return img, minetest.formspec_escape(ndef.description)
-		end
-		return img
+local function get_text(text, x_offs, y_offs)
+	if text == "top_view" then
+		return "label[" .. x_offs .. "," .. y_offs .. ";" .. S("Top view") .. "]"
+	elseif text == "side_view" then
+		return "label[" .. x_offs .. "," .. y_offs .. ";" .. S("Side view") .. "]"
+	elseif text == "sectional_view" then
+		return "label[" .. x_offs .. "," .. y_offs .. ";" .. S("Sectional view") .. "]"
 	end
-	return item
+	return "label[" .. x_offs .. "," .. y_offs .. ";" .. minetest.formspec_escape(text) .. "]"
 end
 
+local function get_image(image, size, x_offs, y_offs)
+	size = size or "2.2,2.2"
+	return "image[" .. x_offs .. "," .. y_offs .. ";" .. size .. ";" .. image .. "]"
+end
+
+local function get_item(item, tooltip, x_offs, y_offs)
+	local ndef = minetest.registered_nodes[tooltip]
+	if ndef and ndef.description then
+		tooltip = minetest.formspec_escape(ndef.description)
+	else
+		tooltip = minetest.formspec_escape(tooltip) or ""
+	end
+	tooltip = "tooltip[" .. x_offs .. "," .. y_offs .. ";1,1;" .. tooltip .. ";#0C3D32;#FFFFFF]"
+
+	if string.find(item, ":") then
+		return "item_image[" .. x_offs .. "," .. y_offs .. ";1,1;" .. item .. "]", tooltip
+	else
+		return "image[" .. x_offs .. "," .. y_offs .. ";1,1;" .. item .. "]", tooltip
+	end
+end
+
+local function get_item_data(tbl, x_offs, y_offs)
+	if type(tbl) == "table" then
+		local ttype = tbl[1]
+		if ttype == "item" then
+			return get_item(tbl[2], tbl[3], x_offs, y_offs)
+		elseif ttype == "img" then
+			return get_image(tbl[2], tbl[3], x_offs, y_offs), ""
+		elseif ttype == "text" then
+			return get_text(tbl[2], x_offs, y_offs), ""
+		else
+			return "", ""
+		end
+	end
+end
 
 -- formspec images
 local function plan(images)
@@ -46,30 +73,39 @@ local function plan(images)
 		for x=1,#images[1] do
 			local item = images[y][x] or false
 			if item ~= false then
-				local img, tooltip = tooltip(item)
 				local x_offs, y_offs = (x-1) * 0.9, (y-1) * 0.9 + 0.8
-				if img == "top_view" then
-					tbl[#tbl+1] = "label["..x_offs..","..y_offs..";"..S("Top view").."]"
-				elseif img == "side_view" then
-					tbl[#tbl+1] = "label["..x_offs..","..y_offs..";"..S("Side view").."]"
-				elseif img == "sectional_view" then
-					tbl[#tbl+1] = "label["..x_offs..","..y_offs..";"..S("Sectional view").."]"
-				elseif img == "" then
-					img = tooltip -- use tooltip for bigger image
-					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";2.2,2.2;"..img.."]"
-				elseif img == "10x10" then
-					img = tooltip -- use tooltip for bigger image
-					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";10,10;"..img.."]"
-				elseif img == "5x4" then
-					img = tooltip -- use tooltip for bigger image
-					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";5,4;"..img.."]"
-				elseif string.find(img, ":") then
-					tbl[#tbl+1] = "item_image["..x_offs..","..y_offs..";1,1;"..img.."]"
-				else
-					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";1,1;"..img.."]"
-				end
+				local image, tooltip = get_item_data(item, x_offs, y_offs)
+				tbl[#tbl+1] = image
+--				local img, tooltip = tooltip(item)
+--				if img == "top_view" then
+--					tbl[#tbl+1] = "label["..x_offs..","..y_offs..";"..S("Top view").."]"
+--				elseif img == "side_view" then
+--					tbl[#tbl+1] = "label["..x_offs..","..y_offs..";"..S("Side view").."]"
+--				elseif img == "sectional_view" then
+--					tbl[#tbl+1] = "label["..x_offs..","..y_offs..";"..S("Sectional view").."]"
+--				elseif img == "" or img == "2x2" then
+--					img = tooltip -- use tooltip for bigger image
+--					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";2.2,2.2;"..img.."]"
+--					tooltip = nil
+--				elseif img == "3x2" then
+--					img = tooltip -- use tooltip for bigger image
+--					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";3,2;"..img.."]"
+--					tooltip = nil
+--				elseif img == "5x4" then
+--					img = tooltip -- use tooltip for bigger image
+--					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";5,4;"..img.."]"
+--					tooltip = nil
+--				elseif img == "10x10" then
+--					img = tooltip -- use tooltip for bigger image
+--					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";10,10;"..img.."]"
+--					tooltip = nil
+--				elseif string.find(img, ":") then
+--					tbl[#tbl+1] = "item_image["..x_offs..","..y_offs..";1,1;"..img.."]"
+--				else
+--					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";1,1;"..img.."]"
+--				end
 				if tooltip then
-					tbl[#tbl+1] = "tooltip["..x_offs..","..y_offs..";1,1;"..tooltip..";#0C3D32;#FFFFFF]"
+					tbl[#tbl+1] = tooltip
 				end
 			end
 		end
@@ -79,7 +115,7 @@ end
 
 local function formspec_help(meta, manual)
 	local idx = meta:get_int("doclib_index")
-	local box = "box[9.5,0.9;1,1.1;#BBBBBB]"
+	local box = "box[9.4,1.5;1.15,1.25;#BBBBBB]"
 	local bttn, symbol
 
 	if manual.content.aPlans[idx] ~= "" then
@@ -87,9 +123,9 @@ local function formspec_help(meta, manual)
 	elseif manual.content.aImages[idx] ~= "" then
 		local item = manual.content.aImages[idx] or ""
 		if string.find(item, ":") then
-			bttn = box .. "item_image[9.6,1;1,1;" .. item .. "]"
+			bttn = box .. "item_image[9.45,1.55;1.3,1.3;" .. item .. "]"
 		else
-			bttn = "image[9.3,1;2,2;" .. item .. "]"
+			bttn = "image[9.4,1.5;1.4,1.4;" .. item .. "]"
 		end
 	else
 		bttn = box
@@ -114,13 +150,14 @@ end
 
 local function formspec_plan(meta, manual)
 	local idx = meta:get_int("doclib_index")
-	local images = manual.content.aPlans[idx] or "none"
+	local name = manual.content.aPlans[idx] or "none"
+	local tbl = manual.content.kvPlans[name] or {}
 	local titel = string.sub(manual.content.aTitles[idx], 3) or "unknown"
 
 	return "size[11,10]" ..
 		"label[0,0;"..titel..":]" ..
 		"button[10,0;1,0.8;back;<<]" ..
-		plan(images)
+		plan(tbl)
 end
 
 function doclib.formspec(pos, mod, language, fields)

@@ -20,14 +20,16 @@ local M = minetest.get_meta
 local MP = minetest.get_modpath("doclib")
 
 local settings = {
-	symbol_item = "doclib:manual",
+	symbol_item = "doclib_book_inv.png", -- can be a PGN file or a item, like: "mod:name"
 }
+
 doclib.create_manual("doclib", "EN", settings)
 local content = dofile(MP.."/manual_EN.lua") 
 doclib.add_to_manual("doclib", "EN", content)
 
 minetest.register_node("doclib:manual", {
 	description = "DocLib Manual (EN)",
+	inventory_image = "doclib_book_inv.png",
 	tiles = {
 		-- up, down, right, left, back, front
 		"doclib_book.png",
@@ -65,3 +67,35 @@ minetest.register_node("doclib:manual", {
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 })
+ 
+
+
+--
+-- Demo plan 1
+--
+local ITEM1 = {"item", "doclib_demo_img1.png"}
+local ITEM2 = {"item", "doclib_demo_img2.png", "Tooltip 1"}
+local ITEM3 = {"item", "doclib_demo_img3.png", "Tooltip 2"}
+local ITEM4 = {"item", "doclib_demo_img4.png", "Tooltip 3"}
+local ITEM5 = {"item", "doclib_book_inv.png",  "doclib:manual"}
+local ITEM6 = {"item", "doclib:manual",  "doclib:manual"}
+local IMG_1 = {"img", "doclib_book_inv.png", "2,2"}
+local TEXT1 = {"text", "Top view"}
+local TEXT2 = {"text", "Pointless Demo"}
+local TEXT3 = {"text", "End"}
+
+-- The maximum plan size is 12 fields wide and 10 fields high
+local plan1 = {
+	{TEXT2, false, false, false, false, false, false, false, false, false, false, ITEM4},
+	{false, false, false, TEXT1, false, false, false, false, IMG_1, false, false, false},
+	{false, false, false, false, false, false, false, false, false, false, false, false},
+	{false, false, false, false, ITEM1, false, false, false, false, false, false, false},
+	{false, false, false, ITEM4, ITEM5, ITEM2, false, false, false, false, false, false},
+	{false, false, false, false, ITEM3, false, false, false, false, false, false, false},
+	{false, false, false, false, ITEM6, false, false, false, false, false, false, false},
+	{false, false, false, false, false, false, false, false, false, false, false, false},
+	{false, false, false, false, false, false, false, false, false, false, false, false},
+	{TEXT3, false, false, false, false, false, false, false, false, false, false, ITEM4},
+}
+
+doclib.add_manual_plan("doclib", "EN", "demo1", plan1)
