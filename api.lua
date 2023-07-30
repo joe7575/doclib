@@ -8,7 +8,7 @@
 	AGPL v3
 	See LICENSE.txt for more information
 
-	A ingame documentation library based on markdown files.
+	A library to generate ingame manuals based on markdown files.
 
 ]]--
 
