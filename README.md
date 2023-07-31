@@ -88,10 +88,10 @@ doclib.add_manual_plan("doclib", "EN", "demo1", plan1)
 ```
 
 - Unused field elements are set to `false` 
-- For a text field a table like `{"text", "Pointless Demo"}` is used
-- For an item field a table like `{"item", "doclib_demo_img2.png", "Tooltip 1"}` is used.
+- For a text field (red mark) a table like `{"text", "Pointless Demo"}` is used
+- For an item field (yellow mark) a table like `{"item", "doclib_demo_img2.png", "Tooltip 1"}` is used.
   The third value is a tooltip. It can be a string, a node name, or `nil` for no tooltip.
-- For an image field a table like `{"img", "doclib_book_inv.png", "2,2"}` is used.
+- For an image field (blue mark) a table like `{"img", "doclib_book_inv.png", "2,2"}` is used.
   The third value is the image size in fields (width x height).
 
 With `doclib.add_manual_plan` the plan is stored under the name "demo1".
