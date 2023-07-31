@@ -161,7 +161,7 @@ local function formspec_plan(meta, manual)
 end
 
 function doclib.formspec(pos, mod, language, fields)
-	local manual = doclib.manual.mod.language
+	local manual = doclib.manual[mod][language]
 	local meta = M(pos)
 
 	if not fields then

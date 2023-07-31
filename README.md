@@ -63,10 +63,7 @@ The arrangement is defined via a Lua table.
 - For an image field (blue mark) a table like `{"img", "doclib_book_inv.png", "2,2"}` is used.
   The third value is the image size in fields (width x height).
 
-With `doclib.add_manual_plan` the plan is stored under the name "demo1".
-
 This is an example of a map with 12 * 10 fields from the demo code in `node.lua`:
-
 
 ```lua
 
@@ -97,6 +94,7 @@ local plan1 = {
 doclib.add_manual_plan("doclib", "EN", "demo1", plan1)
 ```
 
+With `doclib.add_manual_plan` the plan is stored under the name "demo1".
 
 
 ### License

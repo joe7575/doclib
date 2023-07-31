@@ -69,7 +69,6 @@ minetest.register_node("doclib:manual", {
 })
  
 
-
 --
 -- Demo plan 1
 --
