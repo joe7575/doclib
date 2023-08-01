@@ -76,34 +76,6 @@ local function plan(images)
 				local x_offs, y_offs = (x-1) * 0.9, (y-1) * 0.9 + 0.8
 				local image, tooltip = get_item_data(item, x_offs, y_offs)
 				tbl[#tbl+1] = image
---				local img, tooltip = tooltip(item)
---				if img == "top_view" then
---					tbl[#tbl+1] = "label["..x_offs..","..y_offs..";"..S("Top view").."]"
---				elseif img == "side_view" then
---					tbl[#tbl+1] = "label["..x_offs..","..y_offs..";"..S("Side view").."]"
---				elseif img == "sectional_view" then
---					tbl[#tbl+1] = "label["..x_offs..","..y_offs..";"..S("Sectional view").."]"
---				elseif img == "" or img == "2x2" then
---					img = tooltip -- use tooltip for bigger image
---					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";2.2,2.2;"..img.."]"
---					tooltip = nil
---				elseif img == "3x2" then
---					img = tooltip -- use tooltip for bigger image
---					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";3,2;"..img.."]"
---					tooltip = nil
---				elseif img == "5x4" then
---					img = tooltip -- use tooltip for bigger image
---					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";5,4;"..img.."]"
---					tooltip = nil
---				elseif img == "10x10" then
---					img = tooltip -- use tooltip for bigger image
---					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";10,10;"..img.."]"
---					tooltip = nil
---				elseif string.find(img, ":") then
---					tbl[#tbl+1] = "item_image["..x_offs..","..y_offs..";1,1;"..img.."]"
---				else
---					tbl[#tbl+1] = "image["..x_offs..","..y_offs..";1,1;"..img.."]"
---				end
 				if tooltip then
 					tbl[#tbl+1] = tooltip
 				end
@@ -121,7 +93,8 @@ local function formspec_help(meta, manual)
 	if manual.content.aPlans[idx] ~= "" then
 		bttn = "button[9.6,1;1,1;plan;" .. S("Plan") .. "]"
 	elseif manual.content.aImages[idx] ~= "" then
-		local item = manual.content.aImages[idx] or ""
+		local name = manual.content.aImages[idx] or ""
+		local item = manual.content.kvImages[name] or name
 		if string.find(item, ":") then
 			bttn = box .. "item_image[9.45,1.55;1.3,1.3;" .. item .. "]"
 		else
