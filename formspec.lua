@@ -125,7 +125,7 @@ local function formspec_plan(meta, manual)
 	local idx = meta:get_int("doclib_index")
 	local name = manual.content.aPlans[idx] or "none"
 	local tbl = manual.content.kvPlans[name] or {}
-	local titel = string.sub(manual.content.aTitles[idx], 3) or "unknown"
+	local titel = string.sub(manual.content.aTitles[idx] or "", 3) or "unknown"
 
 	return "size[11,10]" ..
 		"label[0,0;"..titel..":]" ..
