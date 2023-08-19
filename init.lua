@@ -24,4 +24,4 @@ local MP = minetest.get_modpath("doclib")
 
 dofile(MP.."/formspec.lua")
 dofile(MP.."/api.lua")
-dofile(MP.."/node.lua") -- only for testing purposes
+--dofile(MP.."/node.lua") -- only for testing purposes
