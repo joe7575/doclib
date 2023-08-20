@@ -660,3 +660,10 @@ if any, to sign a "copyright disclaimer" for the program, if necessary.
 For more information on this, and how to apply and follow the GNU AGPL, see
 <https://www.gnu.org/licenses/>.
 
+==============================================================================
+
+Joachim Stolberg, CC BY-SA 3.0:
+
+* doclib_book.png
+* doclib_book_inv.png
+* doclib_demo_img*.png
